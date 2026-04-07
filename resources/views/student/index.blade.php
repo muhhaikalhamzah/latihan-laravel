@@ -2,5 +2,9 @@
 
     <x-slot:title>{{ $title }}</x-slot>
 
-    <h1 class="fw-bold">Data student</h1>
+    <ul class="list-group">
+        @foreach ($students as $student)
+            <li class="list-group-item">{{ $loop->iteration }}.{{ $student->nim }}--{{ $student->name }}An item</li>
+        @endforeach
+    </ul>
 </x-app>
