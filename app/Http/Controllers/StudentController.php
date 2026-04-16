@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\student;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -14,7 +14,8 @@ class StudentController extends Controller
     {
         return view('student.index', [
             'title' => 'student',
-            'students' => student::all()
+            'students' => Student::latest()->get(),
+            //'students' => Student::orderBy('name','asc')->get(),
             ]);
     }
 
@@ -31,7 +32,22 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+        'name' => 'required|max:255',
+        'nim' => 'required|digits:11|numeric',
+        
+    ],[
+        'name.required' => 'nama wajib di isi',
+        'name.max' => 'nama tidak boleh lebih dari :max karakter',
+        'nim.required' => 'nim wajib di isi',
+        'nim.digits' => 'nim digits:digit',
+        'nim.numerik' => 'nim wajib angka',
+    ]);
+
+    Student::create( $validated);
+    
+ 
+    return to_route('student.index')->withSuccess('data berasil ditambahkan');
     }
 
     /**
@@ -47,7 +63,10 @@ class StudentController extends Controller
      */
     public function edit(student $student)
     {
-        //
+        return view('student.edit', [
+            'title' => 'edit student',
+            'student' => $student,
+            ]);
     }
 
     /**
@@ -55,7 +74,21 @@ class StudentController extends Controller
      */
     public function update(Request $request, student $student)
     {
-        //
+                $validated = $request->validate([
+        'name' => 'required|max:255',
+        'nim' => 'required|digits:11|numeric',
+        
+    ],[
+        'name.required' => 'nama wajib di isi',
+        'name.max' => 'nama tidak boleh lebih dari :max karakter',
+        'nim.required' => 'nim wajib di isi',
+        'nim.digits' => 'nim digits:digit',
+        'nim.numerik' => 'nim wajib angka',
+    ]);
+
+    $student->update( $validated);
+ 
+    return to_route('student.index')->withSuccess('data berasil diubah');
     }
 
     /**
@@ -63,6 +96,8 @@ class StudentController extends Controller
      */
     public function destroy(student $student)
     {
-        //
+        $student->delete($student);
+ 
+    return to_route('student.index')->withSuccess('data berasil dihapus');
     }
 }
