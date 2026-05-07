@@ -9,11 +9,11 @@
     @endsession
 
     <a class="btn btn-primary mb-3" href="{{ route('department.create') }}" role="button">create</a>
-
     <ul class="list-group">
         @foreach ($departments as $department)
             <li class="list-group-item">
                 {{ $loop->iteration }}.{{ $department->name }}
+                <a class="btn btn-info btn-sm" href="{{ route('department.show', $department) }}" role="button">Detail</a>
                 <a class="btn btn-warning btn-sm" href="{{ route('department.edit', $department) }}"
                     role="button">edit</a>
                 <form action="{{ route('department.destroy', $department) }}" method="POST" class="d-inline">
