@@ -4,6 +4,7 @@
 use App\http\Controllers\StudentController;
 use App\http\Controllers\DepartmentController;
 use App\http\Controllers\LecturerController;
+use App\Http\Controllers\OrganizationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/',[StudentController::class,'index']);
@@ -19,3 +20,5 @@ Route::delete('/student/{student}',[StudentController::class,'destroy'])->name('
 
 Route::resource('department', DepartmentController::class);
 Route::resource('lecturer', LecturerController::class);
+
+Route::resource('organization', OrganizationController::class);
